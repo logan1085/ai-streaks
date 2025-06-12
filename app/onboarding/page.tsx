@@ -76,10 +76,10 @@ export default function OnboardingPage() {
   }
 
   return (
-    <div className="min-h-screen bg-black flex items-center justify-center p-4 relative overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50 flex items-center justify-center p-4 relative overflow-hidden">
       {/* Background effects */}
       <div className="absolute inset-0">
-        <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/5 via-purple-500/5 to-pink-500/5"></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-blue-100/20 via-white/30 to-indigo-100/20"></div>
         
         {/* Floating orbs */}
         <motion.div
@@ -92,7 +92,7 @@ export default function OnboardingPage() {
             repeat: Infinity,
             ease: "linear"
           }}
-          className="absolute top-20 left-20 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl"
+          className="absolute top-20 left-20 w-96 h-96 bg-blue-200/20 rounded-full blur-3xl"
         />
         <motion.div
           animate={{
@@ -104,7 +104,7 @@ export default function OnboardingPage() {
             repeat: Infinity,
             ease: "linear"
           }}
-          className="absolute bottom-20 right-20 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl"
+          className="absolute bottom-20 right-20 w-96 h-96 bg-indigo-200/20 rounded-full blur-3xl"
         />
       </div>
 
@@ -117,14 +117,14 @@ export default function OnboardingPage() {
                 key={step.id}
                 className={`w-2 h-2 rounded-full transition-all duration-300 ${
                   index <= currentStep
-                    ? 'bg-gradient-to-r from-cyan-400 to-purple-400 shadow-lg shadow-cyan-400/25'
-                    : 'bg-slate-700'
+                    ? 'bg-gradient-to-r from-blue-500 to-indigo-500 shadow-lg shadow-blue-500/25'
+                    : 'bg-gray-300'
                 }`}
               />
             ))}
           </div>
           <div className="text-center">
-            <p className="text-slate-400 text-sm">
+            <p className="text-gray-600 text-sm">
               Step {currentStep + 1} of {steps.length}
             </p>
           </div>

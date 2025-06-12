@@ -94,9 +94,9 @@ export function AccountStep({ data, onNext, onBack, onUpdateData }: AccountStepP
     >
       {/* Header */}
       <div className="text-center space-y-2">
-        <h2 className="text-2xl font-bold text-white">Create Your Account</h2>
-        <p className="text-slate-300">
-          Enter your credentials to access the AI revolution
+        <h2 className="text-2xl font-bold text-gray-900">Create Your Account</h2>
+        <p className="text-gray-600">
+          Enter your credentials to start your 7-day learning journey
         </p>
       </div>
 
@@ -104,70 +104,70 @@ export function AccountStep({ data, onNext, onBack, onUpdateData }: AccountStepP
       <div className="space-y-4">
         {/* Email Field */}
         <div className="space-y-2">
-          <Label htmlFor="email" className="text-slate-300 font-medium">
+          <Label htmlFor="email" className="text-gray-700 font-medium">
             Email Address
           </Label>
           <div className="relative">
-            <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
+            <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-500" />
             <Input
               id="email"
               type="email"
               placeholder="you@company.com"
               value={data.email}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => onUpdateData({ email: e.target.value })}
-              className="pl-10 bg-slate-800/50 border-slate-600 text-white placeholder-slate-400 focus:border-purple-400"
+              className="pl-10 bg-white border-gray-300 text-gray-900 placeholder-gray-500 focus:border-blue-500 focus:ring-blue-500"
             />
           </div>
           {errors.email && (
-            <p className="text-red-400 text-sm">{errors.email}</p>
+            <p className="text-red-600 text-sm">{errors.email}</p>
           )}
         </div>
 
         {/* Password Field */}
         <div className="space-y-2">
-          <Label htmlFor="password" className="text-slate-300 font-medium">
+          <Label htmlFor="password" className="text-gray-700 font-medium">
             Password
           </Label>
           <div className="relative">
-            <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
+            <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-500" />
             <Input
               id="password"
               type={showPassword ? 'text' : 'password'}
               placeholder="Enter a secure password"
               value={data.password}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => onUpdateData({ password: e.target.value })}
-              className="pl-10 pr-10 bg-slate-800/50 border-slate-600 text-white placeholder-slate-400 focus:border-purple-400"
+              className="pl-10 pr-10 bg-white border-gray-300 text-gray-900 placeholder-gray-500 focus:border-blue-500 focus:ring-blue-500"
             />
             <button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
-              className="absolute right-3 top-1/2 transform -translate-y-1/2 text-slate-400 hover:text-white"
+              className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
             >
               {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
             </button>
           </div>
           {errors.password && (
-            <p className="text-red-400 text-sm">{errors.password}</p>
+            <p className="text-red-600 text-sm">{errors.password}</p>
           )}
           <div className="flex items-center space-x-2 mt-2">
-            <div className={`h-1 flex-1 rounded ${data.password.length >= 8 ? 'bg-green-400' : 'bg-slate-600'}`}></div>
-            <div className={`h-1 flex-1 rounded ${data.password.length >= 12 ? 'bg-green-400' : 'bg-slate-600'}`}></div>
-            <div className={`h-1 flex-1 rounded ${/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/.test(data.password) ? 'bg-green-400' : 'bg-slate-600'}`}></div>
+            <div className={`h-1 flex-1 rounded ${data.password.length >= 8 ? 'bg-green-500' : 'bg-gray-300'}`}></div>
+            <div className={`h-1 flex-1 rounded ${data.password.length >= 12 ? 'bg-green-500' : 'bg-gray-300'}`}></div>
+            <div className={`h-1 flex-1 rounded ${/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/.test(data.password) ? 'bg-green-500' : 'bg-gray-300'}`}></div>
           </div>
-          <p className="text-slate-400 text-xs">
+          <p className="text-gray-600 text-xs">
             Use 8+ characters with numbers and symbols for maximum security
           </p>
         </div>
       </div>
 
       {/* Security Note */}
-      <div className="bg-slate-800/30 border border-slate-600/50 rounded-lg p-4">
+      <div className="bg-green-50 border border-green-200 rounded-lg p-4">
         <div className="flex items-start space-x-3">
-          <Lock className="w-5 h-5 text-green-400 mt-0.5" />
+          <Lock className="w-5 h-5 text-green-600 mt-0.5" />
           <div>
-            <h4 className="text-green-400 font-medium text-sm">Bank-Level Security</h4>
-            <p className="text-slate-300 text-sm mt-1">
-              Your data is encrypted end-to-end and protected by quantum-resistant algorithms.
+            <h4 className="text-green-700 font-medium text-sm">Bank-Level Security</h4>
+            <p className="text-green-700 text-sm mt-1">
+              Your data is encrypted end-to-end and protected with industry-standard security.
             </p>
           </div>
         </div>
@@ -178,7 +178,7 @@ export function AccountStep({ data, onNext, onBack, onUpdateData }: AccountStepP
         <Button
           onClick={onBack}
           variant="outline"
-          className="flex-1 border-slate-600 text-slate-300 hover:bg-slate-800"
+          className="flex-1 border-gray-300 text-gray-700 hover:bg-gray-50"
         >
           <ArrowLeft className="w-4 h-4 mr-2" />
           Back
@@ -187,7 +187,7 @@ export function AccountStep({ data, onNext, onBack, onUpdateData }: AccountStepP
         <Button
           onClick={handleNext}
           disabled={loading || !data.email || !data.password}
-          className="flex-1 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white"
+          className="flex-1 bg-gradient-to-r from-blue-500 to-indigo-500 hover:from-blue-600 hover:to-indigo-600 text-white"
         >
           {loading ? (
             <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></div>
