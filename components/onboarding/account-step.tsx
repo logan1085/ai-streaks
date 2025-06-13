@@ -7,6 +7,7 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { ArrowLeft, ArrowRight, Mail, Lock, Eye, EyeOff } from 'lucide-react'
 import { useSupabase } from '@/components/providers/supabase-provider'
+import { supabase } from '@/lib/supabase'
 
 interface AccountStepProps {
   data: {
@@ -24,7 +25,6 @@ export function AccountStep({ data, onNext, onBack, onUpdateData }: AccountStepP
   const [showPassword, setShowPassword] = useState(false)
   const [loading, setLoading] = useState(false)
   const [errors, setErrors] = useState<{ email?: string; password?: string }>({})
-  const { supabase } = useSupabase()
 
   const validateForm = () => {
     const newErrors: { email?: string; password?: string } = {}
@@ -48,39 +48,45 @@ export function AccountStep({ data, onNext, onBack, onUpdateData }: AccountStepP
     setErrors({})
 
     try {
-      if (supabase) {
-        console.log('🚀 Creating Supabase user:', data.email)
-        
-        const { data: authData, error } = await supabase.auth.signUp({
-          email: data.email,
-          password: data.password,
-          options: {
-            data: {
-              full_name: data.fullName,
-              role: data.role,
-            }
-          }
-        })
-
-        if (error) {
-          console.error('❌ Supabase signup error:', error)
-          setErrors({ email: error.message })
-          return
+      console.log('🚀 Creating Supabase user:', data.email)
+      
+      const { data: authData, error } = await supabase.auth.signUp({
+        email: data.email,
+        password: data.password,
+        options: {
+          data: {
+            full_name: data.fullName,
+            role: data.role,
+          },
+          emailRedirectTo: `${window.location.origin}/auth/callback`
         }
+      })
 
-        console.log('✅ Supabase user created:', authData.user?.id)
-        console.log('📧 Check your email for confirmation link!')
-        
-      } else {
-        console.log('⚠️  Demo mode - no actual user created')
-        // Demo mode fallback
-        await new Promise(resolve => setTimeout(resolve, 1000))
+      if (error) {
+        console.error('❌ Supabase signup error:', error)
+        if (error.message.includes('email')) {
+          setErrors({ email: error.message })
+        } else if (error.message.includes('password')) {
+          setErrors({ password: error.message })
+        } else {
+          setErrors({ email: error.message })
+        }
+        return
       }
+
+      if (!authData.user) {
+        throw new Error('No user returned from signup')
+      }
+
+      console.log('✅ Supabase user created:', authData.user.id)
+      console.log('📧 Check your email for confirmation link!')
       
       onNext()
     } catch (error: any) {
       console.error('❌ Unexpected error:', error)
-      setErrors({ email: 'Something went wrong. Please try again.' })
+      setErrors({ 
+        email: 'Something went wrong. Please try again. If the problem persists, contact support.' 
+      })
     } finally {
       setLoading(false)
     }

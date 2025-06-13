@@ -140,12 +140,12 @@ export default function Dashboard() {
     }
 
     try {
-      const { error } = await supabase
-        .from('api_keys')
-        .upsert({
-          user_id: user.id,
-          provider: 'openai',
-          key_name: 'OpenAI API Key',
+    const { error } = await supabase
+      .from('api_keys')
+      .upsert({
+        user_id: user.id,
+        provider: 'openai',
+        key_name: 'OpenAI API Key',
           encrypted_key: btoa(openaiKey)
         })
 
@@ -154,7 +154,7 @@ export default function Dashboard() {
         alert('Error saving API key: ' + error.message)
       } else {
         console.log('API key saved successfully')
-        setShowKeyInput(false)
+      setShowKeyInput(false)
       }
     } catch (err) {
       console.error('Unexpected error saving API key:', err)
@@ -408,6 +408,10 @@ export default function Dashboard() {
 
       console.log('Template data validated:', templateData)
 
+      if (!supabase) {
+        throw new Error('Supabase client is not initialized')
+      }
+
       // Save to database
       const { data: template, error: templateError } = await supabase
         .from('learning_templates')
@@ -422,7 +426,7 @@ export default function Dashboard() {
           chat_history: messages
         })
         .select()
-        .single()
+      .single()
 
       if (templateError) throw templateError
 
@@ -496,6 +500,10 @@ export default function Dashboard() {
     }
 
     try {
+      if (!supabase) {
+        throw new Error('Supabase client is not initialized')
+      }
+
       // Delete associated lessons first
       const { error: lessonsError } = await supabase
         .from('lessons')
@@ -532,8 +540,8 @@ export default function Dashboard() {
   const handleSignOut = async () => {
     if (!supabase) return
     setSigningOut(true)
-    await supabase.auth.signOut()
-    router.push('/')
+      await supabase.auth.signOut()
+      router.push('/')
   }
 
   if (!openaiKey && !showKeyInput) {
@@ -855,40 +863,40 @@ export default function Dashboard() {
                 )}
 
                 {messages.map((message) => (
-                  <motion.div
-                    key={message.id}
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
-                  >
-                    <div
-                      className={`max-w-[80%] p-4 rounded-2xl ${
-                        message.role === 'user'
+              <motion.div
+                key={message.id}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
+              >
+                <div
+                  className={`max-w-[80%] p-4 rounded-2xl ${
+                    message.role === 'user'
                           ? 'bg-gradient-to-r from-blue-500 to-indigo-500 text-white'
                           : 'bg-gray-100 text-gray-900'
-                      }`}
-                    >
-                      <p className="whitespace-pre-wrap">{message.content}</p>
-                    </div>
-                  </motion.div>
+                  }`}
+                >
+                  <p className="whitespace-pre-wrap">{message.content}</p>
+                </div>
+              </motion.div>
                 ))}
-
-                {isLoading && (
-                  <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    className="flex justify-start"
-                  >
+          
+          {isLoading && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="flex justify-start"
+            >
                     <div className="bg-gray-100 p-4 rounded-2xl">
-                      <div className="flex space-x-1">
+                <div className="flex space-x-1">
                         <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></div>
                         <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
                         <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
-                      </div>
-                    </div>
-                  </motion.div>
-                )}
+                </div>
               </div>
+            </motion.div>
+          )}
+        </div>
 
               {/* Template Creation Button */}
               {canTemplatize && (
@@ -911,11 +919,11 @@ export default function Dashboard() {
 
               {/* Input Area */}
               <div className="border-t border-gray-200 p-6">
-                <div className="flex space-x-3">
-                  <Input
+          <div className="flex space-x-3">
+            <Input
                     ref={inputRef}
-                    value={inputMessage}
-                    onChange={(e) => setInputMessage(e.target.value)}
+              value={inputMessage}
+              onChange={(e) => setInputMessage(e.target.value)}
                     onKeyPress={(e) => {
                       if (e.key === 'Enter' && !e.shiftKey) {
                         e.preventDefault()
@@ -927,23 +935,23 @@ export default function Dashboard() {
                         ? "What would you like to learn in 7 days?" 
                         : "Continue the conversation..."
                     }
-                    disabled={isLoading}
+              disabled={isLoading}
                     className="flex-1 bg-white border-gray-300 text-gray-900 focus:border-blue-500 focus:ring-blue-500"
-                  />
-                  <Button
-                    onClick={sendMessage}
-                    disabled={!inputMessage.trim() || isLoading}
+            />
+            <Button
+              onClick={sendMessage}
+              disabled={!inputMessage.trim() || isLoading}
                     className="bg-gradient-to-r from-blue-500 to-indigo-500 hover:from-blue-600 hover:to-indigo-600 text-white"
-                  >
-                    <Send className="w-4 h-4" />
-                  </Button>
+            >
+              <Send className="w-4 h-4" />
+            </Button>
                 </div>
                 <p className="text-gray-500 text-xs mt-2">
                   💡 Be specific about your goals and current experience level for the best results
                 </p>
               </div>
-            </div>
           </div>
+        </div>
         )}
       </div>
     </div>

@@ -126,14 +126,37 @@ Open [http://localhost:3000](http://localhost:3000) to see the app.
 
 ## Deployment
 
-### Deploy to Vercel
+This project is optimized for deployment on Vercel. To deploy:
 
-1. Push your code to GitHub
-2. Import your project to Vercel
-3. Add environment variables in Vercel dashboard
-4. Deploy!
+1. Fork or clone this repository
+2. Import the project to Vercel
+3. Set the following environment variables in your Vercel project settings:
+   - `NEXT_PUBLIC_SUPABASE_URL`: Your Supabase project URL
+   - `NEXT_PUBLIC_SUPABASE_ANON_KEY`: Your Supabase anonymous key
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/yourusername/supabase-onboarding-demo)
+### Environment Variables
+
+The following environment variables are required:
+
+- `NEXT_PUBLIC_SUPABASE_URL`: Supabase project URL
+- `NEXT_PUBLIC_SUPABASE_ANON_KEY`: Supabase anonymous key
+
+You can find these values in your Supabase project settings.
+
+### Database Setup
+
+The application requires a Supabase database with the following setup:
+
+1. Run the migrations in `supabase/migrations/`
+2. Enable Row Level Security (RLS) policies
+3. Configure authentication providers as needed
+
+### Production Considerations
+
+- Enable automatic preview deployments for pull requests
+- Configure custom domains if needed
+- Set up monitoring and analytics
+- Configure rate limiting and security headers
 
 ## Contributing
 
